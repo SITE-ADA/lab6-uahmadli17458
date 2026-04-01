@@ -4,24 +4,20 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "products")
+
 public class Product {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)  // auto-generate UUID
     private UUID id;
-
-    @Column(nullable = false)
     private String productName;
-
-    @Column(nullable = false)
     private BigDecimal price;
-
     private LocalDate expirationDate;
 
     @ManyToMany
@@ -32,9 +28,9 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
-    // Constructors
     public Product() {
     }
+
 
     public Product(String productName, BigDecimal price, LocalDate expirationDate) {
         this.productName = productName;
@@ -90,5 +86,13 @@ public class Product {
                 ", price=" + price +
                 ", expirationDate=" + expirationDate +
                 '}';
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

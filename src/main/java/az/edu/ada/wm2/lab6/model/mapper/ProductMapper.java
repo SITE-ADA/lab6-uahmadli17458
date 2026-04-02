@@ -23,7 +23,7 @@ public interface ProductMapper {
     Product toEntity(ProductRequestDto dto);
 
     // Custom mapping: Set<Category> → List<String>
-    default List<String> mapCategoriesToNames(Set<Category> categories) {
+    default List<String> mapCategoriesToNames(List<Category> categories) {
         return categories.stream()
                 .map(Category::getName)
                 .toList();

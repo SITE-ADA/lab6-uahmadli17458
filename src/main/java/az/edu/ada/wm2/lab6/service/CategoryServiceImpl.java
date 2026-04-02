@@ -64,9 +64,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
 
-        return productRepository.findAll()
+        return category.getProducts()
                 .stream()
-                .filter(p -> p.getCategories().contains(category))
                 .map(productMapper::toResponseDto)
                 .toList();
     }

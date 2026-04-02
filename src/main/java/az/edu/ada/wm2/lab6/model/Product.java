@@ -1,82 +1,41 @@
 package az.edu.ada.wm2.lab6.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.*;
 
 @Entity
 @Table(name = "products")
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)  // auto-generate UUID
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String productName;
+
+    @Column(nullable = false)
     private BigDecimal price;
+
     private LocalDate expirationDate;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories = new HashSet<>();
-
-    public Product() {
-    }
-
-
-    public Product(String productName, BigDecimal price, LocalDate expirationDate) {
-        this.productName = productName;
-        this.price = price;
-        this.expirationDate = expirationDate;
-    }
-
-    public Product(UUID id, String productName, BigDecimal price, LocalDate expirationDate) {
-        this.id = id;
-        this.productName = productName;
-        this.price = price;
-        this.expirationDate = expirationDate;
-    }
-
-    // Getters and Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+    private List<Category> categories = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -86,13 +45,5 @@ public class Product {
                 ", price=" + price +
                 ", expirationDate=" + expirationDate +
                 '}';
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
 }
